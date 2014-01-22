@@ -29,10 +29,14 @@ def main():
     for filename in args.manifest:
         try:
             with open(filename, 'r') as f_obj:
-                errors = validator.validate(f_obj.read())
+                warnings, errors = validator.validate(f_obj.read())
+                for warning in warnings:
+                    print "W: {0}".format(warning)
                 for error in errors:
-                    print error
-                exit_code = 1
+                    print "E: {0}".format(error)
+
+                if len(errors) > 0:
+                    exit_code = 1
         except IOError:
             parser.error(
                 'The file "{0}" can not be opened'.format(filename))

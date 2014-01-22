@@ -1,3 +1,6 @@
+
+import json
+
 from package_verify.validator import error, _Validator
 
 
@@ -18,6 +21,12 @@ class Validator(_Validator):
 
     def validate(self, data):
         errors = []
+        warnings = []
+        try:
+            data = json.loads(data)
+        except Exception, ex:
+            print ex
+            raise error.WrongFormatError('Input is not valid JSON')
         if type(data) != dict:
             raise error.WrongFormatError('Input data must be a dictionary')
         for key in self.expected_keys:
@@ -37,4 +46,4 @@ class Validator(_Validator):
                 # skip this exception
                 pass
 
-        return errors
+        return (warnings, errors)
