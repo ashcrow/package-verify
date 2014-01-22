@@ -22,6 +22,10 @@ from package_verify.validator import error
 def load_validator(name):
     """
     Loads and returns a validator class.
+
+    :param name str: The name of the validator class to load.
+    :rtype: Validator
+    :returns: Validator class
     """
     try:
         mod = __import__(
@@ -36,6 +40,9 @@ def load_validator(name):
 def list_validators():
     """
     Returns a lists all available validators.
+
+    :rtype: list
+    :returns: A list of available validators as strings.
     """
     import os
 

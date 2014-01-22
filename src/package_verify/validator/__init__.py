@@ -16,6 +16,7 @@
 General Validator code.
 """
 
+
 class _Validator(object):
     """
     Parent class for validators.
@@ -24,6 +25,11 @@ class _Validator(object):
     def validate(self, data):
         """
         Validates input data.
+
+        :param str data: String of info to validate.
+        :raises WrongFormatError: if the format is not useable
+        :rtype: tuple
+        :returns: Warnings and errors
         """
         raise NotImplementedError('validate() must be implemented')
 

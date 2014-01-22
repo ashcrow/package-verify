@@ -22,6 +22,9 @@ from package_verify.validator import error, _Validator
 
 
 class Validator(_Validator):
+    """
+    An example validator.
+    """
 
     expected_keys = (
         'name', 'version', 'release', 'license', 'summary', 'url', 'signature',
@@ -37,6 +40,14 @@ class Validator(_Validator):
     )
 
     def validate(self, data):
+        """
+        Validates input data.
+
+        :param str data: String of info to validate.
+        :raises WrongFormatError: if the format is not useable
+        :rtype: tuple
+        :returns: Warnings and errors
+        """
         errors = []
         warnings = []
         try:
