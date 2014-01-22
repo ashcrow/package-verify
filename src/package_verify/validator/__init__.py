@@ -21,7 +21,7 @@ class _Validator(object):
         """
         String representation of the instance.
         """
-        return "<{0}>".format(self.__class__.__name__)
+        return "<{0}()>".format(self.__class__.__name__)
 
     def __unicode__(self):
         """

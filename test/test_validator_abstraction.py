@@ -12,8 +12,11 @@ class TestParserAbstraction(TestCase):
         """
         self.assertRaises(NotImplementedError, _Validator().validate, {})
 
-    def test_representation(self):
+    def test_representations(self):
         """
-        Validator should return a helpfule representation string.
+        Validator should return a helpful representation strings.
         """
-        assert repr(_Validator()) == '_Validator()'
+        validator = _Validator()
+        assert repr(validator) == '_Validator()'
+        assert str(validator) == '<_Validator()>'
+        assert unicode(validator) == unicode('<_Validator()>')

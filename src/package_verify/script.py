@@ -24,17 +24,20 @@ def main():
     Validator = loader.load_validator(args.validator)
     validator = Validator()
 
+    exit_code = 0
     # Future proofing for multiple inputs
     for filename in args.manifest:
         try:
             with open(filename, 'r') as f_obj:
-                validator.validate(f_obj.read())
+                errors = validator.validate(f_obj.read())
+                for error in errors:
+                    print error
+                exit_code = 1
         except IOError:
             parser.error(
                 'The file "{0}" can not be opened'.format(filename))
 
     # Execute here
-    exit_code = 0
     raise SystemExit(exit_code)
 
 

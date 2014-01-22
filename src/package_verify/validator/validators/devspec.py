@@ -8,12 +8,13 @@ class Validator(_Validator):
         'sha256', 'platform', 'scope', 'packager', 'source_name',
         'source_hash', 'scm_id', 'patches', 'dependencies', 'files',
         'config_files')
-    '''
-        'patches': list,
-#        'dependencies': (dict, (str, str)),
-        'files': (dict, (str, str)),
-#        'config_files': (dict, (dict, (str, bool))),
-    }'''
+
+    non_strings = (
+        ('patches', list),
+        ('dependencies', dict),
+        ('files', dict),
+        ('config_files', dict),
+    )
 
     def validate(self, data):
         errors = []
@@ -24,9 +25,16 @@ class Validator(_Validator):
                 assert key in data.keys()
             except AssertionError, ae:
                 errors.append('{0} is missing'.format(key))
-#                raise error.MissingDataError(key)
 
-        assert type(data['patches']) == list
-        assert type(data['dependencies']) == dict
-        assert type(data['files']) == dict
-        assert type(data['config_files']) == dict
+        for non_string in self.non_strings:
+            try:
+                if type(data[non_string[0]]) != non_string[1]:
+                    errors.append('{0} must be a {1} not a {2]'.format(
+                        non_string[0], non_string[1],
+                        type(data[non_string[0]])))
+            except KeyError:
+                # Since we already noted that the key didn't exist we can
+                # skip this exception
+                pass
+
+        return errors
