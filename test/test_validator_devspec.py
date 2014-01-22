@@ -62,19 +62,23 @@ class TestDevspec(TestCase):
         """
         validator = devspec.Validator()
         result = validator.validate(json.dumps(data))
-        assert type(result) == list
-        assert len(result) == 0
+        assert type(result) == tuple
+        for item in result:
+            assert type(item) == list
+            assert len(item) == 0
 
         # Something missing
         data2 = data
         del data2['files']
         result = validator.validate(json.dumps(data2))
-        assert len(result) == 1
+        assert len(result[0]) == 0
+        assert len(result[1]) == 1
 
         # Two items missing
         del data2['name']
         result = validator.validate(json.dumps(data2))
-        assert len(result) == 2
+        assert len(result[0]) == 0
+        assert len(result[1]) == 2
 
         # Bad data
         self.assertRaises(
