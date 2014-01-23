@@ -48,10 +48,11 @@ def main():
         try:
             with open(filename, 'r') as f_obj:
                 warnings, errors = validator.validate(f_obj.read())
-                for warning in warnings:
-                    print "W: {0}".format(warning)
-                for error in errors:
-                    print "E: {0}".format(error)
+                if not args.quiet:
+                    for warning in warnings:
+                        print "W: {0}".format(warning)
+                    for error in errors:
+                        print "E: {0}".format(error)
 
                 if len(errors) > 0:
                     exit_code = 1
